@@ -31,6 +31,7 @@ export default class Avatar extends React.Component {
     static displayName = 'Avatar'
     static propTypes = {
         className: PropTypes.string,
+        innerClassName: PropTypes.string,
         fgColor: PropTypes.string,
         color: PropTypes.string,
         colors: PropTypes.array,
@@ -53,6 +54,7 @@ export default class Avatar extends React.Component {
 
     static defaultProps = {
         className: 'sb-avatar',
+        innerClassName:'',
         fgColor: '#FFF',
         color: null,
         name: null,
@@ -203,7 +205,8 @@ export default class Avatar extends React.Component {
             borderRadius: (round ? 500 : 0)
         };
         return (
-            <img width={this.props.size}
+            <img className={this.props.innerClassName}
+                width={this.props.size}
                 height={this.props.size}
                 style={imageStyle}
                 src={this.state.src}
