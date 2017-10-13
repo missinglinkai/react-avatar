@@ -1,9 +1,9 @@
 'use strict';
 
-import retina from 'is-retina';
+// import retina from 'is-retina';
 import md5 from 'md5';
 
-const IS_RETINA = retina();
+// const IS_RETINA = retina();
 
 export default
 class GravatarSource {
@@ -21,7 +21,8 @@ class GravatarSource {
     get = (setState) => {
         const { props } = this;
         const email = props.md5Email || md5(props.email);
-        const size = IS_RETINA ? props.size * 2 : props.size;
+        // const size = IS_RETINA ? props.size * 2 : props.size;
+        const size = props.size * 2;
         const url = `https://secure.gravatar.com/avatar/${email}?s=${size}&d=404`;
 
         setState({src: url});
