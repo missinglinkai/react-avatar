@@ -40,6 +40,7 @@ export default class Avatar extends React.Component {
         email: PropTypes.string,
         md5Email: PropTypes.string,
         src: PropTypes.string,
+        srcSet: PropTypes.string,
         facebookId: PropTypes.string,
         googleId: PropTypes.string,
         twitterHandle: PropTypes.string,
@@ -80,6 +81,7 @@ export default class Avatar extends React.Component {
                 sourcePointer: 0
             },
             src: props.src,
+            srcSet: props.srcSet,
             value: null,
             color: props.color
         };
@@ -93,6 +95,9 @@ export default class Avatar extends React.Component {
         const nextState = {};
         if (newProps.src !== this.props.src)
             nextState.src = newProps.src;
+
+        if (newProps.srcSet !== this.props.srcSet)
+            nextState.srcSet = newProps.srcSet;
 
         if (newProps.name !== this.props.name)
             nextState.name = newProps.name;
@@ -210,6 +215,7 @@ export default class Avatar extends React.Component {
                 height={this.props.size}
                 style={imageStyle}
                 src={this.state.src}
+                srcSet={this.state.srcSet}
                 alt={alt}
                 onError={this.fetch} />
         );

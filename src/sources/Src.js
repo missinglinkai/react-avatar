@@ -13,7 +13,8 @@ class SrcSource {
 
     get = (setState) => {
         setState({
-            src: this.props.src
+            src: this.props.src,
+            srcSet: this.props.srcSet
         });
     }
 }

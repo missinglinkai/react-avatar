@@ -25,8 +25,10 @@ class GoogleSource {
         fetch(url, (data) => {
             const src = data.entry.gphoto$thumbnail.$t;
             const srcWithCorrectSize = src.replace('s64', 's' + size);
+            const srcWithCorrectRetinaSize = src.replace('s64', 's' + size*2);
             setState({
-                src: srcWithCorrectSize
+                src: srcWithCorrectSize,
+                srcSet: srcWithCorrectRetinaSize
             });
         }, () => {
             // on error

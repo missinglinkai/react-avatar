@@ -1,6 +1,6 @@
 {
   "name": "react-avatar",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "Universal React avatar component makes it possible to generate avatars based on user information.",
   "main": "lib/index.js",
   "scripts": {
@@ -67,7 +67,6 @@
   },
   "dependencies": {
     "babel-runtime": ">=5.0.0",
-    "is-retina": "^1.0.3",
     "md5": "^2.0.0"
   }
 }

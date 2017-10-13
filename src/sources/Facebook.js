@@ -15,7 +15,9 @@ class FacebookSource {
         const { size, facebookId } = this.props;
         const url = 'https://graph.facebook.com/' +
             `${facebookId}/picture?width=${size}&height=${size}`;
+        const retinaUrl = 'https://graph.facebook.com/' +
+            `${facebookId}/picture?width=${size}&height=${size*2}`;
 
-        setState({src: url});
+        setState({src: url, srcSet:retinaUrl});
     }
 }
