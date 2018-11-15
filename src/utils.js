@@ -36,6 +36,7 @@ function fetchJSONP(url, successCb, errorCb) {
     };
 }
 
+export
 const defaultColors = [
     '#d73d32',
     '#7e3794',
@@ -45,10 +46,28 @@ const defaultColors = [
     '#ff4080'
 ];
 
-function _stringAsciiCodeSum(value) {
-    return [...value]
-        .map(letter => letter.charCodeAt(0))
-        .reduce((current, previous) => previous + current);
+// https://regex101.com/r/YEsPER/1
+// https://developer.mozilla.org/en-US/docs/Web/CSS/length
+const reSize = /^([-+]?(?:\d+(?:\.\d+)?|\.\d+))([a-z]{2,4}|%)?$/;
+
+// https://en.wikipedia.org/wiki/Linear_congruential_generator
+function _stringAsciiPRNG(value, m) {
+    // Xn+1 = (a * Xn + c) % m
+    // 0 < a < m
+    // 0 <= c < m
+    // 0 <= X0 < m
+
+    const charCodes = [...value].map(letter => letter.charCodeAt(0));
+    const len = charCodes.length;
+
+    const a = (len % (m - 1)) + 1;
+    const c = charCodes.reduce((current, next) => current + next) % m;
+
+    let random = charCodes[0] % m;
+    for (let i = 0; i < len; i++)
+        random = ((a * random) + c) % m;
+
+    return random;
 }
 
 export
@@ -65,47 +84,31 @@ function getRandomColor(value, colors = defaultColors)
     // the reason we don't just use a random number is to make sure that
     // a certain value will always get the same color assigned given
     // a fixed set of colors
-    const sum = _stringAsciiCodeSum(value);
-    const colorIndex = (sum % colors.length);
+    const colorIndex = _stringAsciiPRNG(value, colors.length);
     return colors[colorIndex];
 }
 
-function _hasLocalStorage()
-{
-    return typeof Storage !== 'undefined';
-}
-
-const CACHE_KEY = 'react-avatar';
 export
-function cacheFailingSource(source)
-{
-    // cache not available
-    if(!_hasLocalStorage)
-        return;
+function parseSize(size) {
+    size = '' + size;
 
-    const cache = localStorage.getItem(CACHE_KEY) || '';
+    const [,
+        value = 0,
+        unit = 'px'
+    ] = reSize.exec(size) || [];
 
-    // already in cache
-    if(cache.indexOf(source) > -1)
-        return;
-
-    let cacheList = cache.split(';');
-    cacheList.push(source);
-
-    // only keep the last 20 results so we don't fill up local storage
-    cacheList = cacheList.slice(-20);
-
-    try {
-        localStorage.setItem(CACHE_KEY, cacheList.join(';'));
-    } catch(e) {
-        // failsafe for mobile Safari private mode
-        console.error(e);
-    }
+    return {
+        value: parseFloat(value),
+        str: value + unit,
+        unit
+    };
 }
 
 export
-function hasSourceFailedBefore(source)
-{
-    const cache = localStorage.getItem(CACHE_KEY) || '';
-    return cache.indexOf(source) > -1;
+function defaultInitials(name, { maxInitials }) {
+    return name.split(/\s/)
+        .map(part => part.substring(0, 1).toUpperCase())
+        .filter(v => !!v)
+        .slice(0, maxInitials)
+        .join('');
 }

@@ -1,5 +1,6 @@
 'use strict';
 
+import PropTypes from 'prop-types';
 import {getRandomColor} from '../utils';
 
 export default
@@ -8,6 +9,10 @@ class IconSource {
     props = null
     icon = '✷'
 
+    static propTypes = {
+        color: PropTypes.string
+    }
+
     constructor(props) {
         this.props = props;
     }
@@ -15,9 +20,11 @@ class IconSource {
     isCompatible = () => true
 
     get = (setState) => {
+        const { color, colors } = this.props;
         setState({
+            sourceName: 'icon',
             value: this.icon,
-            color: getRandomColor(this.icon, this.props.colors)
+            color: color || getRandomColor(this.icon, colors)
         });
     }
 }

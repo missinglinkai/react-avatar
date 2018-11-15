@@ -1,7 +1,12 @@
 'use strict';
+import PropTypes from 'prop-types';
 
 export default
 class FacebookSource {
+
+    static propTypes = {
+        facebookId: PropTypes.string
+    }
 
     props = null;
 
@@ -18,6 +23,10 @@ class FacebookSource {
         const retinaUrl = 'https://graph.facebook.com/' +
             `${facebookId}/picture?width=${size}&height=${size*2}`;
 
-        setState({src: url, srcSet:retinaUrl});
+        setState({
+            sourceName: 'facebook',
+            src: url,
+            srcSet:retinaUrl
+        });
     }
 }

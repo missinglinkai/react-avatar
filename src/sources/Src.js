@@ -1,7 +1,13 @@
 'use strict';
 
+import PropTypes from 'prop-types';
+
 export default
 class SrcSource {
+
+    static propTypes = {
+        src: PropTypes.string
+    }
 
     props = null
 
@@ -13,6 +19,7 @@ class SrcSource {
 
     get = (setState) => {
         setState({
+            sourceName: 'src',
             src: this.props.src,
             srcSet: this.props.srcSet
         });

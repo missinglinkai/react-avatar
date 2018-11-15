@@ -1,7 +1,13 @@
 'use strict';
 
+import PropTypes from 'prop-types';
+
 export default
 class SkypeSource {
+
+    static propTypes = {
+        skypeId: PropTypes.string
+    }
 
     props = null;
 
@@ -15,6 +21,9 @@ class SkypeSource {
         const { skypeId } = this.props;
         const url = `https://api.skype.com/users/${skypeId}/profile/avatar`;
 
-        setState({src: url});
+        setState({
+            sourceName: 'skype',
+            src: url
+        });
     }
 }

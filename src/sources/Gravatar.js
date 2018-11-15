@@ -1,9 +1,15 @@
 'use strict';
 
+import PropTypes from 'prop-types';
 import md5 from 'md5';
 
 export default
 class GravatarSource {
+
+    static propTypes = {
+        email: PropTypes.string,
+        md5Email: PropTypes.string
+    }
 
     props = null;
 
@@ -21,7 +27,10 @@ class GravatarSource {
         const size = props.size;
         const url = `https://secure.gravatar.com/avatar/${email}?s=${size}&d=404`;
         const setUrl = `https://secure.gravatar.com/avatar/${email}?s=${size * 2}&d=404`;
-
-        setState({src: url, srcSet:setUrl});
+        setState({
+            sourceName: 'gravatar',
+            src: url,
+            srcSet:setUrl
+        });
     }
 }

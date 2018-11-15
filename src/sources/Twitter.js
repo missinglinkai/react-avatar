@@ -1,7 +1,13 @@
 'use strict';
 
+import PropTypes from 'prop-types';
+
 export default
 class TwitterSource {
+
+    static propTypes = {
+        twitterHandle: PropTypes.string
+    }
 
     props = null;
 
@@ -32,6 +38,9 @@ class TwitterSource {
 
         const url = `https://twitter.com/${twitterHandle}/profile_image?size=${size}`;
 
-        setState({src: url});
+        setState({
+            sourceName: 'twitter',
+            src: url
+        });
     }
 }

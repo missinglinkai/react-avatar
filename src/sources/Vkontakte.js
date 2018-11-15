@@ -1,9 +1,14 @@
 'use strict';
 
+import PropTypes from 'prop-types';
 import {fetchJSONP} from '../utils';
 
 export default
-class GoogleSource {
+class VkontakteSource {
+
+    static propTypes = {
+        vkontakteId: PropTypes.string
+    }
 
     props = null;
 
@@ -32,15 +37,18 @@ class GoogleSource {
         const { vkontakteId } = this.props;
         const size = this.getImageSize();
         const url = `https://api.vk.com/method/users.get?user_id=${vkontakteId}&v=5.8&fields=${size}`;
+        const onError = () => setState(null);
 
         fetchJSONP(url, (data) => {
-            const src = data.response[0][size];
+            const src = data && data.response && data.response[0];
+
+            if (!src)
+                return onError();
+
             setState({
-                src: src
+                sourceName: 'vkontakte',
+                src
             });
-        }, () => {
-            // on error
-            setState(null);
-        });
+        }, onError);
     }
 }
