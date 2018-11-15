@@ -99,8 +99,7 @@ class Avatar extends PureComponent {
     }
 
     static defaultProps = {
-        className: 'sb-avatar',
-        innerClassName:'',
+        className: '',
         fgColor: '#FFF',
         round: false,
         size: 100,
